@@ -12,8 +12,6 @@
     "lint:stylelint": "./node_modules/.bin/stylelint src/**/*.scss",
     "clean": "rm -rf dist reports",
     "analyze": "mkdirp reports && webpack --json -profile > reports/webpack-stats.json",
-    "precommit": "npm run lint",
-    "commitmsg": "validate-commit-msg"
   },
   "devDependencies": {
     "autoprefixer": "^6.7.0",

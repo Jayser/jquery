@@ -1,12 +1,11 @@
 import { applyMiddleware, createStore, compose } from 'redux';
 import { apiMiddleware } from 'redux-api-middleware';
-import thunk from 'redux-thunk';
 import { persistState } from 'redux-devtools';
 import rootReducer from './reducers';
 import DevTools from '../DevTools';
 
 const createStoreWithMiddleware = applyMiddleware(apiMiddleware)(createStore);
-const middleware = [thunk];
+const middleware = [];
 
 const enhancers = [];
 
@@ -36,3 +35,4 @@ export default (initialState = {}) => {
 
   return store;
 }
+
