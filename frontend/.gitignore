@@ -1,0 +1,14 @@
+#OS
+.DS_Store
+
+# Build
+reports/
+../backend/node_modules/core-js/build/
+
+# Editors
+.idea/
+
+# Node
+node_modules/
+npm-debug.log*
+yarn-error.log
