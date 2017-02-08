@@ -16,12 +16,11 @@ export default class extends Component {
 
   componentWillMount() {
     const { contacts: { history: { contact, contactId } } } = this.props;
-
     this.historyCalls = this.getHistoryCalls(contact, contactId);
   }
 
   getHistoryCalls(contact, contactId) {
-    if(!contact) {
+    if(!contact._id) {
       this.props.actions.readContact({ contactId });
       return [];
     }
