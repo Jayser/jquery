@@ -27,7 +27,6 @@ export default class extends Component {
     if(!contact._id) {
       this.props.actions.readContact({ contactId });
     }
-
     return contact;
   }
 
@@ -48,20 +47,17 @@ export default class extends Component {
     this.props.actions.updateContact({ contactId, body });
   }
 
-  componentWillReceiveProps({ contacts: { form: { update: { contact, readOneLoaded, updateLoaded } } }, dirty }) {
-    if(updateLoaded) {
-      this.props.router.push('/contacts');
-      return false;
+  componentWillReceiveProps({ contacts: { form: { update: { contact, updateLoaded } } }, dirty }) {
+    this.contact = contact || this.contact;
+
+    if (!dirty && this.contact._id) {
+      this.props.change('firstName', this.contact.firstName);
+      this.props.change('lastName', this.contact.lastName);
+      this.props.change('phoneNumber', this.contact.phoneNumber);
     }
 
-    if(readOneLoaded) {
-      this.contact = this.getContact(contact);
-
-      if (!dirty && this.contact._id) {
-        this.props.change('firstName', this.contact.firstName);
-        this.props.change('lastName', this.contact.lastName);
-        this.props.change('phoneNumber', this.contact.phoneNumber);
-      }
+    if(updateLoaded) {
+      this.props.router.push('/contacts');
     }
   }
 
