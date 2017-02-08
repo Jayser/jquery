@@ -1,8 +1,8 @@
 import React, { Component, PropTypes } from 'react';
 
-import ContactsListRemoveButton from '../ContactsListRemoveButton';
-import ContactsListEditButton from '../ContactsListEditButton';
-import ContactsListHistoryCallButton from '../ContactsListHistoryCallButton';
+import ContactsListRemoveButton from './ContactsListRemoveButton';
+import ContactsListEditButton from './ContactsListEditButton';
+import ContactsListHistoryCallButton from './ContactsListHistoryCallButton';
 
 export default class extends Component {
   static propTypes = {

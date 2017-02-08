@@ -1,13 +1,16 @@
 import React, { Component } from 'react';
 import CSSModules from 'react-css-modules';
 
-import styles from './ContactsHistoryCallsTheadItems.scss';
+import styles from './ContactsListTh.scss';
 
 @CSSModules(styles)
 export default class extends Component {
   render() {
     const ths = [
-      'Phone',
+      'First name',
+      'Last name',
+      'Phone number',
+      'Actions'
     ];
     return (
       <tr>

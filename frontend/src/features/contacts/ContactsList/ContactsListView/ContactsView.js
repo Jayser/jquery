@@ -3,9 +3,9 @@ import { Table } from 'react-bootstrap';
 import CSSModules from 'react-css-modules';
 import autobind from 'autobind-decorator';
 
-import ContactsTheadItems from '../ContactsTheadItems';
+import ContactsListTh from '../ContactsListTh';
 import ContactsListItems from '../ContactsListItems';
-import ContactsPagination from '../ContactsListPagination';
+import ContactsListPagination from '../ContactsListPagination';
 import ContactsListAddButton from '../ContactsListAddButton';
 import styles from './ContactsView.scss';
 
@@ -26,7 +26,7 @@ export default class extends Component {
   }
 
   render() {
-    const { contacts: { read: { data, activePage, count } }, actions: { removeContact } } = this.props;
+    const { contacts: { list: { data, activePage, count } }, actions: { removeContact } } = this.props;
 
     return (
       <section styleName='root'>
@@ -35,11 +35,11 @@ export default class extends Component {
         <div>
           <Table styleName='table' striped bordered condensed hover>
             <thead>
-              <ContactsTheadItems />
+              <ContactsListTh />
             </thead>
             <ContactsListItems contacts={ data } handleRemoveContact={ removeContact } />
           </Table>
-          <ContactsPagination
+          <ContactsListPagination
             activePage={ activePage }
             items={ count }
             onSelect={ this.handleChangeRoute } />

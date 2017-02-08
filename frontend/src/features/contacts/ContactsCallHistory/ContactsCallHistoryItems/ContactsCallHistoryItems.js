@@ -9,7 +9,7 @@ export default class extends Component {
     return (
       <tbody>
         {
-          this.props.calls.map((call) => (
+          this.props.calls.map((call, key) => (
             <tr key={ call._id }>
               <td>{ call.phone }</td>
             </tr>
