@@ -19,6 +19,10 @@ const ContactSchema = new mongoose.Schema({
     type: String,
     required: true
   },
+  historyCalls: [{
+    type: mongoose.Schema.Types.ObjectId,
+    ref: 'Call'
+  }],
   createdAt: {
     type: Date,
     default: Date.now
@@ -36,6 +40,7 @@ ContactSchema.statics = {
    */
   get(id) {
     return this.findById(id)
+      .populate('historyCalls')
       .exec()
       .then((contact) => {
         if (contact) {
@@ -57,6 +62,7 @@ ContactSchema.statics = {
       .sort({ createdAt: -1 })
       .skip(skip)
       .limit(limit)
+      .populate('historyCalls')
       .exec();
   }
 };

@@ -1,4 +1,5 @@
 const Contact = require('./contacts.model.js');
+const Call = require('./call.model.js');
 
 /**
  * Load contact and append to req.
@@ -6,8 +7,7 @@ const Contact = require('./contacts.model.js');
 function load(req, res, next, id) {
   Contact.get(id)
     .then((contact) => {
-      console.log(JSON.stringify(contact))
-      console.log(JSON.stringify(contact))
+      console.log(JSON.stringify(contact));
       req.contact = contact; // eslint-disable-line no-param-reassign
       return next();
     })
@@ -30,10 +30,19 @@ function get(req, res) {
  * @returns {Contact}
  */
 function create(req, res, next) {
+  // TODO: for tests
+  const calls = [];
+  for (let i = 0; i < 2; i++) {
+    const call = new Call({ phone: `+38066141011${i}` });
+    call.save();
+    calls.push(call);
+  }
+
   const contact = new Contact({
     firstName: req.body.firstName,
     lastName: req.body.lastName,
-    phoneNumber: req.body.phoneNumber
+    phoneNumber: req.body.phoneNumber,
+    historyCalls: calls
   });
 
   contact.save()

@@ -2,6 +2,7 @@ import React, { Component, PropTypes } from 'react';
 
 import ContactsListRemoveButton from '../ContactsListRemoveButton';
 import ContactsListEditButton from '../ContactsListEditButton';
+import ContactsListHistoryCallButton from '../ContactsListHistoryCallButton';
 
 export default class extends Component {
   static propTypes = {
@@ -21,6 +22,7 @@ export default class extends Component {
               <td>{ contact.lastName }</td>
               <td>{ contact.phoneNumber }</td>
               <td className='text-center'>
+                <ContactsListHistoryCallButton contactId={ contact._id } />
                 <ContactsListEditButton contactId={ contact._id } />
                 <ContactsListRemoveButton handleRemoveContact={ handleRemoveContact } contactId={ contact._id } />
               </td>

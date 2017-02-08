@@ -7,6 +7,7 @@ import { formatUrl } from '../../utils';
 const CREATE = 'contacts/CREATE';
 const CREATE_SUCCESS = 'contacts/CREATE_SUCCESS';
 const CREATE_FAIL = 'contacts/CREATE_FAIL';
+const CREATE_CLEAR = 'contacts/CREATE_CLEAR';
 
 const READ = 'contacts/READ';
 const READ_SUCCESS = 'contacts/READ_SUCCESS';
@@ -19,157 +20,191 @@ const READ_ONE_FAIL = 'contacts/READ_ONE_FAIL';
 const UPDATE = 'contacts/UPDATE';
 const UPDATE_SUCCESS = 'contacts/UPDATE_SUCCESS';
 const UPDATE_FAIL = 'contacts/UPDATE_FAIL';
+const UPDATE_CLEAR = 'contacts/UPDATE_CLEAR';
 
 const DELETE = 'contacts/DELETE';
 const DELETE_SUCCESS = 'contacts/DELETE_SUCCESS';
 const DELETE_FAIL = 'contacts/DELETE_FAIL';
 
-const CLEAR = 'contacts/CLEAR';
 
 // Reducer
 const initialState = {
-  activePage: 1,
-  data: []
+  loading: false,
+  error: null
 };
-export default combineReducers({
-  create(state = {}, action = {}) {
-    switch (action.type) {
-      case CREATE:
-        return {
-          loading: true
-        };
-      case CREATE_SUCCESS:
-        return {
-          loading: false,
-          loaded: true
-        };
-      case CREATE_FAIL:
-        return {
-          loading: false,
-          loaded: false,
-          error: {
-            title: CREATE_FAIL,
-            message: action.payload.response.message
-          }
-        };
-      case CLEAR:
-        return {};
-      default:
-        return state;
-    }
-  },
-  read(state = initialState, action = {}) {
-    switch (action.type) {
-      case READ_ONE:
-      case READ:
-        return {
-          ...state,
-          loading: true
-        };
-      case READ_SUCCESS:
-        return {
-          ...state,
-          loading: false,
-          loaded: true,
-          data: action.payload
-        };
-      case READ_ONE_SUCCESS:
-        return {
-          ...state,
-          loading: false,
-          loaded: true,
-          data: [action.payload]
-        };
-      case CREATE_SUCCESS:
-        return {
-          ...state,
-          data: [ ...state.data, action.payload ]
-        };
-      case UPDATE_SUCCESS:
-        return {
-          ...state,
-          data: state.data.map((contact) => contact._id === action.payload._id ? action.payload : contact)
-        };
-      case DELETE_SUCCESS:
-        return {
-          ...state,
-          data: state.data.filter((contact) => contact._id !== action.payload._id)
-        };
-      case READ_FAIL:
-        return {
-          ...state,
-          loading: false,
-          loaded: false,
-          error: {
-            title: CREATE_FAIL,
-            message: action.payload.response.message
-          }
-        };
-      case READ_ONE_FAIL:
-        return {
-          ...state,
-          loading: false,
-          loaded: false,
-          error: {
-            title: READ_ONE_FAIL,
-            message: action.payload.response.message
-          }
-        };
-      default:
-        return state;
-    }
-  },
-  update(state = {}, action = {}) {
-    switch (action.type) {
-      case UPDATE:
-        return {
-          loading: true
-        };
-      case UPDATE_SUCCESS:
-        return {
-          loading: false,
-          loaded: true
-        };
-      case UPDATE_FAIL:
-        return {
-          loading: false,
-          loaded: false,
-          error: {
-            title: UPDATE_FAIL,
-            message: action.payload.response.message
-          }
-        };
-      case CLEAR:
-        return {};
-      default:
-        return state;
-    }
-  },
-  delete(state = {}, action = {}) {
-    switch (action.type) {
-      case DELETE:
-        return {
-          loading: true
-        };
-      case DELETE_SUCCESS:
-        return {
-          loading: false,
-          loaded: true
-        };
-      case DELETE_FAIL:
-        return {
-          loading: false,
-          loaded: false,
-          error: {
-            title: DELETE_FAIL,
-            message: action.payload.response.message
-          }
-        };
-      default:
-        return state;
-    }
+
+const initialStateRead = {
+  activePage: 1,
+  data: [],
+  error: null
+};
+
+const create = (state = initialState, action) => {
+  switch (action.type) {
+    case CREATE:
+      return {
+        ...state,
+        loading: true
+      };
+    case CREATE_SUCCESS:
+      return {
+        ...state,
+        loading: false,
+        loaded: true
+      };
+    case CREATE_FAIL:
+      return {
+        ...state,
+        loading: false,
+        loaded: false,
+        error: {
+          title: CREATE_FAIL,
+          message: action.payload.response.message
+        }
+      };
+    case CREATE_CLEAR:
+      return { ...initialState };
+    default:
+      return state;
   }
-});
+};
+
+const read = (state = initialStateRead, action) => {
+  switch (action.type) {
+    case READ:
+      return {
+        ...state,
+        loading: true
+      };
+    case READ_SUCCESS:
+      return {
+        ...state,
+        loading: false,
+        loaded: true,
+        data: action.payload
+      };
+    case READ_ONE_SUCCESS:
+      return {
+        ...state,
+        data: [ ...state.data, action.payload ]
+      };
+    case CREATE_SUCCESS:
+      return {
+        ...state,
+        data: [ ...state.data, action.payload ]
+      };
+    case UPDATE_SUCCESS:
+      return {
+        ...state,
+        data: state.data.map((contact) => contact._id === action.payload._id ? action.payload : contact)
+      };
+    case DELETE_SUCCESS:
+      return {
+        ...state,
+        data: state.data.filter((contact) => contact._id !== action.payload._id)
+      };
+    case READ_FAIL:
+      return {
+        ...state,
+        loading: false,
+        loaded: false,
+        error: {
+          title: CREATE_FAIL,
+          message: action.payload.response.message
+        }
+      };
+    default:
+      return state;
+  }
+};
+
+const readOne = (state = initialState, action) => {
+  switch (action.type) {
+    case READ_ONE:
+      return {
+        ...state,
+        loading: true
+      };
+    case READ_ONE_SUCCESS:
+      return {
+        ...state,
+        loading: false,
+        loaded: true
+      };
+    case READ_ONE_FAIL:
+      return {
+        ...state,
+        loading: false,
+        loaded: false,
+        error: {
+          title: READ_ONE_FAIL,
+          message: action.payload.response.message
+        }
+      };
+    default:
+      return state;
+  }
+};
+
+const update = (state = initialState, action) => {
+  switch (action.type) {
+    case UPDATE:
+      return {
+        ...state,
+        loading: true
+      };
+    case UPDATE_SUCCESS:
+      return {
+        ...state,
+        loading: false,
+        loaded: true
+      };
+    case UPDATE_FAIL:
+      return {
+        ...state,
+        loading: false,
+        loaded: false,
+        error: {
+          title: UPDATE_FAIL,
+          message: action.payload.response.message
+        }
+      };
+    case UPDATE_CLEAR:
+      return { ...initialState };
+    default:
+      return state;
+  }
+};
+
+const remove = (state = initialState, action) => {
+  switch (action.type) {
+    case DELETE:
+      return {
+        ...state,
+        loading: true
+      };
+    case DELETE_SUCCESS:
+      return {
+        ...state,
+        loading: false,
+        loaded: true
+      };
+    case DELETE_FAIL:
+      return {
+        ...state,
+        loading: false,
+        loaded: false,
+        error: {
+          title: DELETE_FAIL,
+          message: action.payload.response.message
+        }
+      };
+    default:
+      return state;
+  }
+};
+
+export default combineReducers({ create, read, readOne, update, remove });
 
 // Action Creators
 export function createContact(body) {
@@ -226,6 +261,10 @@ export function updateContact(contactId, body) {
   };
 }
 
-export function clearState() {
-  return { type: CLEAR };
+export function clearUpdate() {
+  return { type: UPDATE_CLEAR };
+}
+
+export function clearCreate() {
+  return { type: CREATE_CLEAR };
 }

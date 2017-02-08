@@ -18,7 +18,7 @@ export default class extends Component {
   };
 
   componentWillUnmount() {
-    this.props.actions.clearState();
+    this.props.actions.clearCreate();
   }
 
   componentWillReceiveProps({ contacts: { create: { loaded } } }) {

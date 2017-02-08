@@ -49,7 +49,7 @@ export default class extends Component {
   }
 
   componentWillUnmount() {
-    this.props.actions.clearState();
+    this.props.actions.clearUpdate();
   }
 
   render() {

@@ -11,7 +11,7 @@
     "lint:eslint": "./node_modules/.bin/eslint --cache src",
     "lint:stylelint": "./node_modules/.bin/stylelint src/**/*.scss",
     "clean": "rm -rf dist reports",
-    "analyze": "mkdirp reports && webpack --json -profile > reports/webpack-stats.json",
+    "analyze": "mkdirp reports && webpack --json -profile > reports/webpack-stats.json"
   },
   "devDependencies": {
     "autoprefixer": "^6.7.0",
