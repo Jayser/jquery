@@ -3,6 +3,9 @@ import { combineReducers } from 'redux';
 
 import { formatUrl } from '../../utils';
 
+import form from './ContactsForm/widgets';
+import list from './ContactsList/widgets';
+
 // Actions
 const READ_ONE = 'contacts/READ_ONE';
 const READ_ONE_SUCCESS = 'contacts/READ_ONE_SUCCESS';
@@ -42,9 +45,6 @@ const readOne = (state = initialState, action) => {
       return state;
   }
 };
-
-import form from './ContactsForm/widgets';
-import list from './ContactsList/widgets';
 
 // Actions Creator
 export function readContact({ contactId }) {
