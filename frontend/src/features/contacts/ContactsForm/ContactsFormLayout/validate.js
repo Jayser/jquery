@@ -1,4 +1,4 @@
-import { createValidator, required } from '../../../utils/validation';
+import { createValidator, required } from '../../../../utils/validation';
 
 export default createValidator({
   firstName: [ required ],

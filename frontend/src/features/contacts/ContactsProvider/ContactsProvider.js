@@ -22,16 +22,8 @@ export default class extends Component {
   };
 
   render() {
-    return (
-      <div>
-        {
-          cloneElement(this.props.children, {
-            contacts: this.props.contacts,
-            actions: this.props.actions,
-            router: this.props.router
-          })
-        }
-      </div>
-    )
+    const { children, contacts, actions, router } = this.props;
+
+    return (<div> { cloneElement(children, { contacts, actions, router }) }</div>);
   }
 }

@@ -1,20 +1,13 @@
 import React, { Component, PropTypes } from 'react';
 import autobind from 'autobind-decorator';
-import { reduxForm, propTypes } from 'redux-form';
 
-import { FormField } from '../../../../shared/forms';
-import formValidation from '../formValidation';
+import ContactsFormLayout from '../ContactsFormLayout';
 
-@reduxForm({
-  form: 'contacts/form/UPDATE',
-  validate: formValidation
-})
 export default class extends Component {
   static propTypes = {
-    ...propTypes,
-    actions: PropTypes.object.isRequired,
-    contacts: PropTypes.object.isRequired,
-    router: PropTypes.object.isRequired
+    actions: PropTypes.object,
+    contacts: PropTypes.object,
+    router: PropTypes.object
   };
 
   componentWillMount(){
@@ -30,25 +23,18 @@ export default class extends Component {
     return contact;
   }
 
-  @autobind onSubmit(values) {
+  @autobind handleSubmit(values) {
     const body = {
       firstName: values.firstName,
       lastName: values.lastName,
       phoneNumber: values.phoneNumber
     };
-    const contactId = this.contactId;
 
-    this.props.actions.updateContact({ contactId, body });
+    this.props.actions.updateContact({ contactId: this.contactId, body });
   }
 
-  componentWillReceiveProps({ contacts: { form: { update: { contact, updateLoaded } } }, dirty }) {
+  componentWillReceiveProps({ contacts: { form: { update: { contact, updateLoaded } } } }) {
     this.contact = contact || this.contact;
-
-    if (!dirty && this.contact._id) {
-      this.props.change('firstName', this.contact.firstName);
-      this.props.change('lastName', this.contact.lastName);
-      this.props.change('phoneNumber', this.contact.phoneNumber);
-    }
 
     if(updateLoaded) {
       this.props.router.push('/contacts');
@@ -60,36 +46,15 @@ export default class extends Component {
   }
 
   render() {
-    const { handleSubmit, pristine, reset, submitting } = this.props;
+    const { firstName, lastName, phoneNumber } = this.contact;
 
-    return (
-      <div className='text-center'>
-        <h1>Edit Contact</h1>
-        <form onSubmit={ handleSubmit(this.onSubmit) }>
-          <FormField
-            name='firstName'
-            type='text'
-            component='input'
-            label='First Name *'
-            placeholder='input first name' />
-          <FormField
-            name='lastName'
-            type='text'
-            component='input'
-            label='Last Name *'
-            placeholder='input last name' />
-          <FormField
-            name='phoneNumber'
-            type='text'
-            component='input'
-            label='Phone Number *'
-            placeholder='input phone number' />
-          <div>
-            <button type='submit' disabled={ submitting }>Edit Contact</button>
-            <button type='button' disabled={ pristine || submitting } onClick={ reset }>Clear</button>
-          </div>
-        </form>
-      </div>
-    );
+    if (!firstName) {
+      return null;
+    }
+
+    return <ContactsFormLayout
+      title='Create contact'
+      initialValues={ { firstName, lastName, phoneNumber } }
+      handleSubmitForm={ this.handleSubmit } />;
   }
 }
