@@ -30,12 +30,6 @@ export default class extends Component {
     return contact;
   }
 
-  componentWillReceiveProps({ contacts: { form: { update: { contact, readOneLoaded } } } }) {
-    if(readOneLoaded) {
-      this.contact = this.getContact(contact);
-    }
-  }
-
   @autobind onSubmit(values) {
     const body = {
       firstName: values.firstName,
